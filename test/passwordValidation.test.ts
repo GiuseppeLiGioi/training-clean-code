@@ -11,7 +11,6 @@ import {
   hasSpecialCharacters,
   isMediumPassword,
   isStrongPassword,
-  isWeakPassword,
 } from "../logic/passwordStrength";
 import { containsSpaces, isPasswordEmpty } from "../logic/passwordValidation";
 
@@ -52,14 +51,6 @@ test("isMediumPassword restituisce true se la password è media", () => {
 
 test("isMediumPassword restituisce false se la password non è media", () => {
   expect(isMediumPassword("abcdef")).toBe(false);
-});
-
-test("isWeakPassword restituisce true se la password è debole", () => {
-  expect(isWeakPassword("abcdef")).toBe(true);
-});
-
-test("isWeakPassword restituisce false se la password non è debole", () => {
-  expect(isWeakPassword("abc123")).toBe(false);
 });
 
 test("hasMinimumCharacters restituisce true se la password ha almeno min caratteri", () => {

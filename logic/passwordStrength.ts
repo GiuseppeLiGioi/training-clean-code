@@ -1,9 +1,9 @@
 import { PasswordStrength } from "../types/passwordTypes";
 
 export const getPasswordStrength = (password: string): PasswordStrength => {
-  if (isWeakPassword(password)) return "weak";
+  if (isStrongPassword(password)) return "strong";
   else if (isMediumPassword(password)) return "medium";
-  else return "strong";
+  else return "weak";
 };
 
 export const isStrongPassword = (password: string): boolean => {
@@ -15,19 +15,14 @@ export const isStrongPassword = (password: string): boolean => {
 };
 
 export const isMediumPassword = (password: string): boolean => {
-  return (
-    hasMinimumCharacters(password, 6) &&
-    hasNumbers(password) &&
-    !hasSpecialCharacters(password)
-  );
-};
+  const minChars = hasMinimumCharacters(password, 6);
+  if (!minChars) return false;
+  if (isStrongPassword(password)) return false;
 
-export const isWeakPassword = (password: string): boolean => {
-  return (
-    hasMinimumCharacters(password, 6) &&
-    hasOnlyLowercaseCharacters(password) &&
-    !hasNumbers(password)
-  );
+  const hasNum = hasNumbers(password);
+  const hasSpecial = hasSpecialCharacters(password);
+
+  return hasNum || hasSpecial;
 };
 
 export const hasMinimumCharacters = (
@@ -47,6 +42,6 @@ export const hasNumbers = (password: string): boolean => {
 };
 
 export const hasSpecialCharacters = (password: string): boolean => {
-  const specials = "@#[]<>£$%";
+  const specials = "@#[]<>£$%&.-_";
   return password.split("").some((c) => specials.includes(c));
 };

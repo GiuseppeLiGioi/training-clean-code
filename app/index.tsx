@@ -1,7 +1,7 @@
-import { StyleSheet, Text } from "react-native";
-
+import PasswordValidator from "@/components/my/PasswordValidator";
+import { StyleSheet } from "react-native";
 export default function HomeScreen() {
-  return <Text>Sono Home</Text>;
+  return <PasswordValidator />;
 }
 
 const styles = StyleSheet.create({});
