@@ -1,4 +1,4 @@
-import { PasswordStrength } from "@/types/passwordTypes";
+import { PasswordStrength } from "../types/passwordTypes";
 
 export const getPasswordStrength = (password: string): PasswordStrength => {
   if (isWeakPassword(password)) return "weak";

@@ -1,4 +1,9 @@
 import {
+  getPasswordColor,
+  getPasswordFeedback,
+  getPasswordMessage,
+} from "../logic/passwordPresentation";
+import {
   getPasswordStrength,
   hasMinimumCharacters,
   hasNumbers,
@@ -87,4 +92,45 @@ test("hasSpecialCharacters restituisce true se ci sono caratteri speciali", () =
 
 test("hasSpecialCharacters restituisce false se non ci sono caratteri speciali", () => {
   expect(hasSpecialCharacters("abcdef")).toBe(false);
+});
+
+//password Presentation test
+test("getPasswordColor restituisce 'red' per weak", () => {
+  expect(getPasswordColor("weak")).toBe("red");
+});
+test("getPasswordColor restituisce 'yellow' per medium", () => {
+  expect(getPasswordColor("medium")).toBe("yellow");
+});
+test("getPasswordColor restituisce 'green' per strong", () => {
+  expect(getPasswordColor("strong")).toBe("green");
+});
+
+test("getPasswordMessage restituisce 'password debole' per weak", () => {
+  expect(getPasswordMessage("weak")).toBe("password debole");
+});
+test("getPasswordMessage restituisce 'password media' per medium", () => {
+  expect(getPasswordMessage("medium")).toBe("password media");
+});
+test("getPasswordMessage restituisce 'password forte' per strong", () => {
+  expect(getPasswordMessage("strong")).toBe("password forte");
+});
+
+test("getPasswordFeedback restituisce errore e rosso se password vuota", () => {
+  const result = getPasswordFeedback("");
+  expect(result.color).toBe("red");
+});
+test("getPasswordFeedback restituisce messaggio debole e rosso", () => {
+  const result = getPasswordFeedback("abcdef");
+  expect(result.color).toBe("red");
+  expect(result.message).toBe("password debole");
+});
+test("getPasswordFeedback restituisce messaggio medio e giallo", () => {
+  const result = getPasswordFeedback("abc123");
+  expect(result.color).toBe("yellow");
+  expect(result.message).toBe("password media");
+});
+test("getPasswordFeedback restituisce messaggio forte e verde", () => {
+  const result = getPasswordFeedback("abc123$£@#");
+  expect(result.color).toBe("green");
+  expect(result.message).toBe("password forte");
 });
