@@ -8,23 +8,29 @@ export const getPasswordStrength = (password: string): PasswordStrength => {
 
 export const isStrongPassword = (password: string): boolean => {
   return (
-    hasMinimunCharacters(password, 8) &&
+    hasMinimumCharacters(password, 8) &&
     hasNumbers(password) &&
     hasSpecialCharacters(password)
   );
 };
 
 export const isMediumPassword = (password: string): boolean => {
-  return hasMinimunCharacters(password, 6) && hasNumbers(password);
+  return (
+    hasMinimumCharacters(password, 6) &&
+    hasNumbers(password) &&
+    !hasSpecialCharacters(password)
+  );
 };
 
 export const isWeakPassword = (password: string): boolean => {
   return (
-    hasMinimunCharacters(password, 6) && hasOnlyLowercaseCharacters(password)
+    hasMinimumCharacters(password, 6) &&
+    hasOnlyLowercaseCharacters(password) &&
+    !hasNumbers(password)
   );
 };
 
-export const hasMinimunCharacters = (
+export const hasMinimumCharacters = (
   password: string,
   min: number
 ): boolean => {
