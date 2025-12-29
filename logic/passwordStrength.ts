@@ -42,6 +42,6 @@ export const hasNumbers = (password: string): boolean => {
 };
 
 export const hasSpecialCharacters = (password: string): boolean => {
-  const specials = "@#[]<>£$%&.-_";
+  const specials = "@#[]<>£$%&.-_!";
   return password.split("").some((c) => specials.includes(c));
 };

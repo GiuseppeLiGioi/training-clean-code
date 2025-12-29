@@ -9,23 +9,19 @@ import {
 } from "../types/passwordTypes";
 export const passwordChecklistRules: PasswordCheck[] = [
   {
-    id: "min-8",
-    check: (password) => hasMinimumCharacters(password, 8),
-  },
-  {
-    id: "min-6",
+    label: "Contiene almeno 6 caratteri",
     check: (password) => hasMinimumCharacters(password, 6),
   },
   {
-    id: "number",
+    label: "Contiene almeno un numero",
     check: (password) => hasNumbers(password),
   },
   {
-    id: "special",
+    label: "Contiene almeno un carattere speciale (@#[]<>£$%&.-_!)",
     check: (password) => hasSpecialCharacters(password),
   },
   {
-    id: "number-special",
+    label: "Contiene almeno un carattere speciale e un numero",
     check: (password) => hasSpecialCharacters(password) && hasNumbers(password),
   },
 ];
@@ -38,7 +34,7 @@ export const populateRequirements = (
   for (let i = 0; i < arr.length; i++) {
     const isSatisfaied: boolean = evaluateRequirement(password, arr[i]);
     const newResult: PasswordRequirementResult = buildRequirementResult(
-      arr[i].id,
+      arr[i].label,
       isSatisfaied
     );
     requirementsResult.push(newResult);

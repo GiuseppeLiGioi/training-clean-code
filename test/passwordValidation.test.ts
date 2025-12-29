@@ -109,20 +109,20 @@ describe("Password checklist helpers", () => {
   });
 
   test("evaluateRequirement restituisce true se requisito soddisfatto", () => {
-    const requirement: PasswordCheck = { id: "number", check: hasNumbers };
+    const requirement: PasswordCheck = { label: "number", check: hasNumbers };
     expect(evaluateRequirement("abc123", requirement)).toBe(true);
   });
 
   test("evaluateRequirement restituisce false se requisito non soddisfatto", () => {
-    const requirement: PasswordCheck = { id: "number", check: hasNumbers };
+    const requirement: PasswordCheck = { label: "number", check: hasNumbers };
     expect(evaluateRequirement("abcdef", requirement)).toBe(false);
   });
 
   test("populateRequirements restituisce array corretto con tutti i casi", () => {
     const rules: PasswordCheck[] = [
-      { id: "min-6", check: (pw) => hasMinimumCharacters(pw, 6) },
-      { id: "number", check: hasNumbers },
-      { id: "special", check: hasSpecialCharacters },
+      { label: "min-6", check: (pw) => hasMinimumCharacters(pw, 6) },
+      { label: "number", check: hasNumbers },
+      { label: "special", check: hasSpecialCharacters },
     ];
 
     const result = populateRequirements("abc1&", rules);
@@ -136,8 +136,8 @@ describe("Password checklist helpers", () => {
 
   test("populateRequirements gestisce password vuota", () => {
     const rules: PasswordCheck[] = [
-      { id: "min-6", check: (pw) => hasMinimumCharacters(pw, 6) },
-      { id: "number", check: hasNumbers },
+      { label: "min-6", check: (pw) => hasMinimumCharacters(pw, 6) },
+      { label: "number", check: hasNumbers },
     ];
 
     const result = populateRequirements("", rules);

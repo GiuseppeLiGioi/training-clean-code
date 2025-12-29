@@ -10,10 +10,15 @@ export type PasswordDisplayData = {
 };
 
 export type PasswordCheck = {
-  id: string;
+  label: string;
   check: (password: string) => boolean;
 };
 export type PasswordRequirementResult = {
   id: string;
   satisfied: boolean;
+};
+export type BarData = {
+  color: string;
+  percent: number;
+  strength: PasswordStrength;
 };

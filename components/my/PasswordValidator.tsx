@@ -2,25 +2,30 @@ import usePasswordValidator from "@/hooks/usePasswordValidator";
 import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { moderateScale } from "react-native-size-matters";
+import Checklist from "./Checklist";
+import PasswordBar from "./PasswordBar";
 
 export default function PasswordValidator() {
-  const { password, feedback, handleChangeText } = usePasswordValidator();
+  const { password, handleChangeText, checklist, getBarData } =
+    usePasswordValidator();
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Inserisci la password</Text>
       <TextInput
-        style={[styles.input, feedback && { borderColor: feedback.color }]}
+        style={styles.input}
         value={password}
         onChangeText={handleChangeText}
         secureTextEntry
         autoCapitalize="none"
         autoCorrect={false}
       />
-      {feedback && (
-        <Text style={[styles.feedback, { color: feedback.color }]}>
-          {feedback.message}
-        </Text>
+      {checklist && checklist.length > 0 && (
+        <View style={styles.checklistBox}>
+          <PasswordBar data={getBarData(password)} />
+          <View style={styles.divider} />
+          <Checklist checklist={checklist} />
+        </View>
       )}
     </View>
   );
@@ -47,9 +52,23 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(16),
     backgroundColor: "white",
   },
-  feedback: {
-    marginTop: moderateScale(8),
-    fontSize: moderateScale(14),
-    fontWeight: "500",
+  checklistBox: {
+    marginTop: moderateScale(16),
+    backgroundColor: "#f7f7fa",
+    borderRadius: moderateScale(14),
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
+    padding: moderateScale(16),
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.07,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: "#e0e0e0",
+    marginVertical: moderateScale(12),
+    borderRadius: 1,
   },
 });
