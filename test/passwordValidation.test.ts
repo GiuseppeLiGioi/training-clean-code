@@ -3,11 +3,7 @@ import {
   evaluateRequirement,
   populateRequirements,
 } from "../logic/passwordChecklist";
-import {
-  getPasswordColor,
-  getPasswordFeedback,
-  getPasswordMessage,
-} from "../logic/passwordPresentation";
+import { getPasswordColor } from "../logic/passwordPresentation";
 import {
   getPasswordStrength,
   hasMinimumCharacters,
@@ -100,36 +96,6 @@ test("getPasswordColor restituisce 'yellow' per medium", () => {
 });
 test("getPasswordColor restituisce 'green' per strong", () => {
   expect(getPasswordColor("strong")).toBe("green");
-});
-
-test("getPasswordMessage restituisce 'password debole' per weak", () => {
-  expect(getPasswordMessage("weak")).toBe("password debole");
-});
-test("getPasswordMessage restituisce 'password media' per medium", () => {
-  expect(getPasswordMessage("medium")).toBe("password media");
-});
-test("getPasswordMessage restituisce 'password forte' per strong", () => {
-  expect(getPasswordMessage("strong")).toBe("password forte");
-});
-
-test("getPasswordFeedback restituisce errore e rosso se password vuota", () => {
-  const result = getPasswordFeedback("");
-  expect(result.color).toBe("red");
-});
-test("getPasswordFeedback restituisce messaggio debole e rosso", () => {
-  const result = getPasswordFeedback("abcdef");
-  expect(result.color).toBe("red");
-  expect(result.message).toBe("password debole");
-});
-test("getPasswordFeedback restituisce messaggio medio e giallo", () => {
-  const result = getPasswordFeedback("abc123");
-  expect(result.color).toBe("yellow");
-  expect(result.message).toBe("password media");
-});
-test("getPasswordFeedback restituisce messaggio forte e verde", () => {
-  const result = getPasswordFeedback("abc123$£@#");
-  expect(result.color).toBe("green");
-  expect(result.message).toBe("password forte");
 });
 
 //password Checklist test

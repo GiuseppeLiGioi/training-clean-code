@@ -3,10 +3,6 @@ export type PasswordColor = "red" | "yellow" | "green";
 export type ErrorMessage =
   | "La password inserita è vuota"
   | "La password contiene spazi";
-export type StrengthMessage =
-  | "password debole"
-  | "password media"
-  | "password forte";
 
 export type PasswordDisplayData = {
   message: string | null;
