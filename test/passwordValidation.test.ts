@@ -1,4 +1,9 @@
 import {
+  buildRequirementResult,
+  evaluateRequirement,
+  populateRequirements,
+} from "../logic/passwordChecklist";
+import {
   getPasswordColor,
   getPasswordFeedback,
   getPasswordMessage,
@@ -13,6 +18,7 @@ import {
   isStrongPassword,
 } from "../logic/passwordStrength";
 import { containsSpaces, isPasswordEmpty } from "../logic/passwordValidation";
+import { PasswordCheck } from "../types/passwordTypes";
 
 // Password Validation Tests
 test("la funzione isPasswordEmpty restituisce true se la password è vuota", () => {
@@ -124,4 +130,60 @@ test("getPasswordFeedback restituisce messaggio forte e verde", () => {
   const result = getPasswordFeedback("abc123$£@#");
   expect(result.color).toBe("green");
   expect(result.message).toBe("password forte");
+});
+
+//password Checklist test
+describe("Password checklist helpers", () => {
+  test("buildRequirementResult crea oggetto corretto", () => {
+    const result = buildRequirementResult("number", true);
+    expect(result).toEqual({ id: "number", satisfied: true });
+
+    const result2 = buildRequirementResult("special", false);
+    expect(result2).toEqual({ id: "special", satisfied: false });
+  });
+
+  test("evaluateRequirement restituisce true se requisito soddisfatto", () => {
+    const requirement: PasswordCheck = { id: "number", check: hasNumbers };
+    expect(evaluateRequirement("abc123", requirement)).toBe(true);
+  });
+
+  test("evaluateRequirement restituisce false se requisito non soddisfatto", () => {
+    const requirement: PasswordCheck = { id: "number", check: hasNumbers };
+    expect(evaluateRequirement("abcdef", requirement)).toBe(false);
+  });
+
+  test("populateRequirements restituisce array corretto con tutti i casi", () => {
+    const rules: PasswordCheck[] = [
+      { id: "min-6", check: (pw) => hasMinimumCharacters(pw, 6) },
+      { id: "number", check: hasNumbers },
+      { id: "special", check: hasSpecialCharacters },
+    ];
+
+    const result = populateRequirements("abc1&", rules);
+
+    expect(result).toEqual([
+      { id: "min-6", satisfied: false },
+      { id: "number", satisfied: true },
+      { id: "special", satisfied: true },
+    ]);
+  });
+
+  test("populateRequirements gestisce password vuota", () => {
+    const rules: PasswordCheck[] = [
+      { id: "min-6", check: (pw) => hasMinimumCharacters(pw, 6) },
+      { id: "number", check: hasNumbers },
+    ];
+
+    const result = populateRequirements("", rules);
+
+    expect(result).toEqual([
+      { id: "min-6", satisfied: false },
+      { id: "number", satisfied: false },
+    ]);
+  });
+
+  test("populateRequirements gestisce array vuoto di requisiti", () => {
+    const result = populateRequirements("abc123", []);
+    expect(result).toEqual([]);
+  });
 });

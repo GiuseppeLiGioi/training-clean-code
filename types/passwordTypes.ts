@@ -12,3 +12,12 @@ export type PasswordDisplayData = {
   message: string | null;
   color: PasswordColor;
 };
+
+export type PasswordCheck = {
+  id: string;
+  check: (password: string) => boolean;
+};
+export type PasswordRequirementResult = {
+  id: string;
+  satisfied: boolean;
+};
