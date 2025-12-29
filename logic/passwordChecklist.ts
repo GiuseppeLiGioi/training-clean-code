@@ -7,7 +7,7 @@ import {
   PasswordCheck,
   PasswordRequirementResult,
 } from "../types/passwordTypes";
-const passwordChecklistRules: PasswordCheck[] = [
+export const passwordChecklistRules: PasswordCheck[] = [
   {
     id: "min-8",
     check: (password) => hasMinimumCharacters(password, 8),
